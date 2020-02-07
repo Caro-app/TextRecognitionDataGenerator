@@ -210,3 +210,25 @@ If anything is missing, unclear, or simply not working, open an issue on the rep
 - Better background generation
 - Better handwritten text generation
 - More customization parameters (mostly regarding background)
+
+
+
+# Modification from Upstream
+- Add GeneratorFromControlledRandom with parameter to control  
+    - the mix of chinese, english, number (thousand sep) and symbol  (lang_mix)  
+    - probabiliy of language interchange (next_lang_stickness)  
+- Option to sample line from from CN and EN txt file  
+
+```
+from trdg.generators.from_random import GeneratorFromControlledRandom
+
+lang_mix = {'cn': 0.5,
+            'en': 0.1,
+            'num': 0.2,
+            'sym': 0.2}
+
+generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness=0.7, ch_file=None, en_file=None)
+
+for i, (img, lbl) in enumerate(generator):
+    do something
+```

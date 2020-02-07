@@ -5,6 +5,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
+import copy
 
 def create_strings_from_file(filename, count):
     """
@@ -114,3 +115,159 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
             current_string += " "
         strings.append(current_string[:-1])
     return strings
+
+def _num_generator():
+    while True:
+        rand = rnd.random()
+        if rand < 0.1:
+            number = '{:,.2f}'.format(rnd.randint(0, 1e3) / 100)
+        elif 0.1 <= rand <0.4:
+            if rand < 0.7:
+                number = '{:,}'.format(rnd.randint(0,1e3))
+            else:
+                number = '{:,.2f}'.format(rnd.randint(0, 1e5) / 100)
+        elif 0.4 <= rand < 0.7:
+            if rand < 0.7:    
+                number = '{:,}'.format(rnd.randint(0,1e6))
+            else:
+                number = '{:,}'.format(rnd.randint(0,1e8) / 100)
+        elif 0.7 <= rand <= 0.95:
+            if rand < 0.7:
+                number = '{:,}'.format(rnd.randint(0,1e9))
+            else:
+                number = '{:,}'.format(rnd.randint(0,1e11) / 100)
+        else:
+            if rand < 0.7:
+                number = '{:,}'.format(rnd.randint(0,1e12))
+            else:
+                number = '{:,}'.format(rnd.randint(0,1e11) / 100)
+        if rand < 0.1:
+            number = '-' + number
+        elif 0.1 <= rand < 0.4:
+            number = '(' + number + ')'
+        yield number
+
+
+class CH_GENERATOR():
+
+    
+    def __init__(self, file=None):
+        self.file = file
+        if self.file is not None:
+            with open(file, 'r') as f:
+                self.data = list(f.read().split('\n'))
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.file is not None:
+            return self.data[rnd.randint(0, len(self.data) - 1)]
+        else:
+            text = ''
+            for _ in range(rnd.randint(1,4)):
+                text += chr(rnd.randint(19968, 40908))
+            return text
+
+class EN_GENERATOR():
+
+
+    def __init__(self, file=None):
+        self.file = file
+        if self.file is not None:
+            with open(file, 'r') as f:
+                self.data = list(f.read().split('\n'))
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.file is not None:
+            return self.data[rnd.randint(0, len(self.data) - 1)]
+        else:
+            text = ''
+            for _ in range(rnd.randint(2,12)):
+                text += string.ascii_letters[rnd.randint(0, 51)]
+            return text
+
+def _sym_generator():
+    while True:
+        yield string.punctuation[rnd.randint(0, 3)]
+
+
+
+class ControlledRandomStringsGenerator:
+
+
+    def __init__(self, length, allow_variable, count, lang_mix, next_lang_stickness, ch_file=None, en_file=None):
+        self.length = length
+        self.allow_variable = allow_variable
+        self.count = count
+        self.lang_mix = lang_mix
+        self.next_lang_stickness = next_lang_stickness
+        self.ch_gen = CH_GENERATOR(ch_file)
+        self.en_gen = EN_GENERATOR(en_file)
+        self.num_gen = _num_generator()
+        self.sym_gen = _sym_generator()
+    
+    @staticmethod
+    def _sample_from_dict(pool_input, length, next_lang_stickness):
+        pool = copy.deepcopy(pool_input)
+        state_history = []
+        text_list = []
+        while len(state_history) < length or sum([len(i) for i in pool.values()]) != 0:
+            if len(state_history) == 0:
+                current_state = rnd.choice(['cn', 'en', 'num', 'sym'])
+                state_history.append(current_state)
+                text_list.append(pool[current_state].pop(0))
+            else:
+                if (rnd.random() < next_lang_stickness and len(pool[state_history[-1]]) > 0):
+                    current_state = state_history[-1]
+                else:
+                    #only include non-empty list
+                    next_action_set = list([k for k,v in pool.items() if len(v)>0 and k != state_history[-1]]) 
+                    if len(next_action_set) == 0:
+                        break
+                    current_state = rnd.choice(next_action_set)
+                state_history.append(current_state)
+                text_list.append(pool[current_state].pop(0))
+        return ' '.join(text_list)
+    
+    def pool_setup(self):
+        assert 'cn' in self.lang_mix and 'en' in self.lang_mix and 'num' in self.lang_mix and 'sym' in self.lang_mix
+        cn_length = self.length * self.lang_mix['cn']
+        en_length = self.length * self.lang_mix['en']
+        num_length = self.length * self.lang_mix['num']
+        sym_length = self.length * self.lang_mix['sym']
+        cn_pool = []
+        while len(cn_pool) < cn_length:
+            cn_pool.append(next(self.ch_gen))
+        en_pool = []
+        while len(en_pool) < en_length:
+            en_pool.append(next(self.en_gen))
+        num_pool = []
+        while len(num_pool) < num_length:
+            num_pool.append(next(self.num_gen))
+        sym_pool = []
+        while len(sym_pool) < sym_length:
+            sym_pool.append(next(self.sym_gen))
+        return {'cn': cn_pool, 'en': en_pool, 'num': num_pool, 'sym': sym_pool}
+
+    def generate(self):
+        """
+            Create all strings by randomly sampling from a pool of characters.
+            lang_mix = {'cn': 0.5,
+                        'en': 0.1,
+                        'num': 0.2,
+                        'sym': 0.2}
+        """
+        strings = []
+        for _ in range(0, self.count):
+            pool = self.pool_setup()
+            if self.allow_variable:
+                current_string = self._sample_from_dict(pool, rnd.randint(1, self.length), self.next_lang_stickness)
+            else:
+                current_string = self._sample_from_dict(pool, self.length, self.next_lang_stickness)
+            strings.append(current_string)
+        return strings
+

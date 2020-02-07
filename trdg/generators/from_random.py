@@ -1,6 +1,6 @@
 from .from_strings import GeneratorFromStrings
 from ..data_generator import FakeTextDataGenerator
-from ..string_generator import create_strings_randomly
+from ..string_generator import create_strings_randomly, ControlledRandomStringsGenerator
 from ..utils import load_dict, load_fonts
 
 
@@ -93,4 +93,88 @@ class GeneratorFromRandom:
                 self.use_symbols,
                 self.language,
             )
+        return self.generator.next()
+
+
+class GeneratorFromControlledRandom:
+    """Generator that uses randomly generated words"""
+
+    def __init__(
+        self,
+        count=-1,
+        length=20,
+        allow_variable=False,
+        language="cn",
+        lang_mix={'cn': 0.35, 'en': 0.4, 'num': 0.2, 'sym': 0.05},
+        next_lang_stickness=0.7,
+        ch_file=None,
+        en_file=None,
+        fonts=[],
+        size=32,
+        skewing_angle=0,
+        random_skew=False,
+        blur=0,
+        random_blur=False,
+        background_type=0,
+        distorsion_type=0,
+        distorsion_orientation=0,
+        is_handwritten=False,
+        width=-1,
+        alignment=1,
+        text_color="#282828",
+        orientation=0,
+        space_width=1.0,
+        character_spacing=0,
+        margins=(5, 5, 5, 5),
+        fit=False,
+        output_mask=False,
+    ):
+        self.count = count
+        self.length = length
+        self.allow_variable = allow_variable
+        self.lang_mix = lang_mix
+        self.next_lang_stickness = next_lang_stickness
+        self.ch_file = ch_file
+        self.en_file = en_file
+        self.texts_gen = ControlledRandomStringsGenerator(self.length,
+                                                          self.allow_variable, 
+                                                          1000, 
+                                                          self.lang_mix, 
+                                                          self.next_lang_stickness,
+                                                          ch_file=self.ch_file, 
+                                                          en_file=self.en_file)
+        self.generator = GeneratorFromStrings(
+            self.texts_gen.generate(),
+            count,
+            fonts if len(fonts) else load_fonts(language),
+            language,
+            size,
+            skewing_angle,
+            random_skew,
+            blur,
+            random_blur,
+            background_type,
+            distorsion_type,
+            distorsion_orientation,
+            is_handwritten,
+            width,
+            alignment,
+            text_color,
+            orientation,
+            space_width,
+            character_spacing,
+            margins,
+            fit,
+            output_mask,
+        )
+
+    def __iter__(self):
+        return self.generator
+
+    def __next__(self):
+        return self.next()
+
+    def next(self):
+        if self.generator.generated_count >= 999:
+            self.generator.strings = self.texts_gen.generate()
         return self.generator.next()
