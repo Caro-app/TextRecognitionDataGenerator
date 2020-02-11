@@ -266,6 +266,14 @@ def parse_arguments():
         default=(5, 5, 5, 5),
     )
     parser.add_argument(
+        "-rm",
+        "--random_margins",
+        type=bool,
+        nargs="?",
+        help="Random margins or not",
+        default=False,
+    )
+    parser.add_argument(
         "-fi",
         "--fit",
         action="store_true",
@@ -384,6 +392,7 @@ def main():
                 [args.space_width] * string_count,
                 [args.character_spacing] * string_count,
                 [args.margins] * string_count,
+                [args.random_margins] * string_count,
                 [args.fit] * string_count,
                 [args.output_mask] * string_count,
             ),

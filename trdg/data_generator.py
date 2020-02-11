@@ -45,12 +45,18 @@ class FakeTextDataGenerator(object):
         space_width,
         character_spacing,
         margins,
+        random_margins,
         fit,
         output_mask,
     ):
         image = None
-
         margin_top, margin_left, margin_bottom, margin_right = margins
+        if random_margins:
+            margin_top = rnd.randint(0, margin_top)
+            margin_left = rnd.randint(0, margin_left)
+            margin_bottom = rnd.randint(0, margin_bottom)
+            margin_right = rnd.randint(0, margin_right)
+
         horizontal_margin = margin_left + margin_right
         vertical_margin = margin_top + margin_bottom
 

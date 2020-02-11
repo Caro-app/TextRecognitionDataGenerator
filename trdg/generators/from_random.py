@@ -33,6 +33,7 @@ class GeneratorFromRandom:
         space_width=1.0,
         character_spacing=0,
         margins=(5, 5, 5, 5),
+        random_margins=False,
         fit=False,
         output_mask=False,
     ):
@@ -72,6 +73,7 @@ class GeneratorFromRandom:
             space_width,
             character_spacing,
             margins,
+            random_margins,
             fit,
             output_mask,
         )
@@ -127,6 +129,7 @@ class GeneratorFromControlledRandom:
         space_width=1.0,
         character_spacing=0,
         margins=(5, 5, 5, 5),
+        random_margins=False,
         fit=False,
         output_mask=False,
     ):
@@ -167,6 +170,7 @@ class GeneratorFromControlledRandom:
             space_width,
             character_spacing,
             margins,
+            random_margins,
             fit,
             output_mask,
         )

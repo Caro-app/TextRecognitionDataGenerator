@@ -149,6 +149,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -184,6 +185,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -219,6 +221,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -254,6 +257,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -289,6 +293,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -324,6 +329,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -359,6 +365,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -394,6 +401,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -429,6 +437,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -465,6 +474,7 @@ class DataGenerator(unittest.TestCase):
                 1,
                 0,
                 (5, 5, 5, 5),
+                False,
                 0,
                 0,
             )
@@ -496,6 +506,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -531,6 +542,7 @@ class DataGenerator(unittest.TestCase):
             4,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -566,6 +578,7 @@ class DataGenerator(unittest.TestCase):
             2,
             0,
             (5, 5, 5, 5),
+            False,
             0,
             0,
         )
@@ -602,6 +615,7 @@ class DataGenerator(unittest.TestCase):
                 2,
                 0,
                 (5, 5, 5, 5),
+                False,
                 0,
                 0,
             )

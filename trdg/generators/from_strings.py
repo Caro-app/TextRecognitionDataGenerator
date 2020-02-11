@@ -27,6 +27,7 @@ class GeneratorFromStrings:
         space_width=1.0,
         character_spacing=0,
         margins=(5, 5, 5, 5),
+        random_margins=False,
         fit=False,
         output_mask=False,
     ):
@@ -52,6 +53,7 @@ class GeneratorFromStrings:
         self.space_width = space_width
         self.character_spacing = character_spacing
         self.margins = margins
+        self.random_margins = random_margins
         self.fit = fit
         self.output_mask = output_mask
         self.generated_count = 0
@@ -90,6 +92,7 @@ class GeneratorFromStrings:
                 self.space_width,
                 self.character_spacing,
                 self.margins,
+                self.random_margins,
                 self.fit,
                 self.output_mask,
             ),

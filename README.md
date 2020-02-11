@@ -1,3 +1,33 @@
+# Modification from Upstream
+- Add GeneratorFromControlledRandom with parameter to control  
+    - the mix of chinese, english, number (thousand sep) and symbol  (lang_mix)  
+    - probabiliy of language interchange (next_lang_stickness)  
+    - probability of space character between text   
+- Option to sample line from from CN and EN txt file  
+- Random Margin Option  
+
+Example  
+```
+from trdg.generators.from_random import GeneratorFromControlledRandom
+
+lang_mix = {'cn': 0.5,
+            'en': 0.1,
+            'num': 0.2,
+            'sym': 0.2}
+
+generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness=0.7,
+                                          space_probability=0.3, ch_file=None, en_file=None, random_margins=True)
+
+for i, (img, lbl) in enumerate(generator):
+    if i < 100:
+        img.save('tests/data/{}.png'.format(i))
+        with open('tests/data/{}.gt.txt'.format(i), 'w') as f:
+            f.write(lbl)
+    else:
+        break
+```
+
+
 # TextRecognitionDataGenerator [![TravisCI](https://travis-ci.org/Belval/TextRecognitionDataGenerator.svg?branch=master)](https://travis-ci.org/Belval/TextRecognitionDataGenerator) [![PyPI version](https://badge.fury.io/py/trdg.svg)](https://badge.fury.io/py/trdg) [![codecov](https://codecov.io/gh/Belval/TextRecognitionDataGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/Belval/TextRecognitionDataGenerator) [![Documentation Status](https://readthedocs.org/projects/textrecognitiondatagenerator/badge/?version=latest)](https://textrecognitiondatagenerator.readthedocs.io/en/latest/?badge=latest) [![mattermost](https://img.shields.io/badge/help-mattermost-blue)](https://mattermost.belval.org/signup_user_complete/?id=6j1pj6itd7y4781o1u813796ry)
 
 A synthetic data generator for text recognition
@@ -211,32 +241,3 @@ If anything is missing, unclear, or simply not working, open an issue on the rep
 - Better handwritten text generation
 - More customization parameters (mostly regarding background)
 
-
-
-# Modification from Upstream
-- Add GeneratorFromControlledRandom with parameter to control  
-    - the mix of chinese, english, number (thousand sep) and symbol  (lang_mix)  
-    - probabiliy of language interchange (next_lang_stickness)  
-    - probability of space character between text
-- Option to sample line from from CN and EN txt file  
-
-Example  
-```
-from trdg.generators.from_random import GeneratorFromControlledRandom
-
-lang_mix = {'cn': 0.5,
-            'en': 0.1,
-            'num': 0.2,
-            'sym': 0.2}
-
-generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness=0.7,
-                                          space_probability=0.3, ch_file=None, en_file=None)
-
-for i, (img, lbl) in enumerate(generator):
-    if i < 100:
-        img.save('tests/data/{}.png'.format(i))
-        with open('tests/data/{}.gt.txt'.format(i), 'w') as f:
-            f.write(lbl)
-    else:
-        break
-```
