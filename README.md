@@ -217,6 +217,7 @@ If anything is missing, unclear, or simply not working, open an issue on the rep
 - Add GeneratorFromControlledRandom with parameter to control  
     - the mix of chinese, english, number (thousand sep) and symbol  (lang_mix)  
     - probabiliy of language interchange (next_lang_stickness)  
+    - probability of space character between text
 - Option to sample line from from CN and EN txt file  
 
 Example  
