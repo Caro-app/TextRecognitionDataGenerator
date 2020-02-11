@@ -218,7 +218,7 @@ class ControlledRandomStringsGenerator:
         text_list = []
         while len(state_history) < length or sum([len(i) for i in pool.values()]) != 0:
             if len(state_history) == 0:
-                current_state = rnd.choice(['cn', 'en', 'num', 'sym'])
+                current_state = rnd.choice([k for k, v in pool.items() if len(v) > 0])
                 state_history.append(current_state)
                 text_list.append(pool[current_state].pop(0))
             else:
@@ -226,7 +226,7 @@ class ControlledRandomStringsGenerator:
                     current_state = state_history[-1]
                 else:
                     #only include non-empty list
-                    next_action_set = list([k for k,v in pool.items() if len(v)>0 and k != state_history[-1]]) 
+                    next_action_set = list([k for k, v in pool.items() if len(v) > 0 and k != state_history[-1]]) 
                     if len(next_action_set) == 0:
                         break
                     current_state = rnd.choice(next_action_set)
