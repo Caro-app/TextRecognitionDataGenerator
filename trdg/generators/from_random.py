@@ -107,6 +107,7 @@ class GeneratorFromControlledRandom:
         language="cn",
         lang_mix={'cn': 0.35, 'en': 0.4, 'num': 0.2, 'sym': 0.05},
         next_lang_stickness=0.7,
+        space_probability=0.3,
         ch_file=None,
         en_file=None,
         fonts=[],
@@ -134,6 +135,7 @@ class GeneratorFromControlledRandom:
         self.allow_variable = allow_variable
         self.lang_mix = lang_mix
         self.next_lang_stickness = next_lang_stickness
+        self.space_probability = space_probability
         self.ch_file = ch_file
         self.en_file = en_file
         self.texts_gen = ControlledRandomStringsGenerator(self.length,
@@ -141,6 +143,7 @@ class GeneratorFromControlledRandom:
                                                           1000, 
                                                           self.lang_mix, 
                                                           self.next_lang_stickness,
+                                                          self.space_probability,
                                                           ch_file=self.ch_file, 
                                                           en_file=self.en_file)
         self.generator = GeneratorFromStrings(

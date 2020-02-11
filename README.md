@@ -219,6 +219,7 @@ If anything is missing, unclear, or simply not working, open an issue on the rep
     - probabiliy of language interchange (next_lang_stickness)  
 - Option to sample line from from CN and EN txt file  
 
+Example  
 ```
 from trdg.generators.from_random import GeneratorFromControlledRandom
 
@@ -227,8 +228,14 @@ lang_mix = {'cn': 0.5,
             'num': 0.2,
             'sym': 0.2}
 
-generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness=0.7, ch_file=None, en_file=None)
+generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness=0.7,
+                                          space_probability=0.3, ch_file=None, en_file=None)
 
 for i, (img, lbl) in enumerate(generator):
-    do something
+    if i < 100:
+        img.save('tests/data/{}.png'.format(i))
+        with open('tests/data/{}.gt.txt'.format(i), 'w') as f:
+            f.write(lbl)
+    else:
+        break
 ```

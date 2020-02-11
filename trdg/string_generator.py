@@ -199,19 +199,20 @@ def _sym_generator():
 class ControlledRandomStringsGenerator:
 
 
-    def __init__(self, length, allow_variable, count, lang_mix, next_lang_stickness, ch_file=None, en_file=None):
+    def __init__(self, length, allow_variable, count, lang_mix, next_lang_stickness, space_probability, ch_file=None, en_file=None):
         self.length = length
         self.allow_variable = allow_variable
         self.count = count
         self.lang_mix = lang_mix
         self.next_lang_stickness = next_lang_stickness
+        self.space_probability = space_probability
         self.ch_gen = CH_GENERATOR(ch_file)
         self.en_gen = EN_GENERATOR(en_file)
         self.num_gen = _num_generator()
         self.sym_gen = _sym_generator()
     
     @staticmethod
-    def _sample_from_dict(pool_input, length, next_lang_stickness):
+    def _sample_from_dict(pool_input, length, next_lang_stickness, space_probability):
         pool = copy.deepcopy(pool_input)
         state_history = []
         text_list = []
@@ -231,7 +232,14 @@ class ControlledRandomStringsGenerator:
                     current_state = rnd.choice(next_action_set)
                 state_history.append(current_state)
                 text_list.append(pool[current_state].pop(0))
-        return ' '.join(text_list)
+        
+        sampled_text = ''
+        for i in text_list:
+            if rnd.random() < space_probability:
+                sampled_text += ' ' + i
+            else:
+                sampled_text += i
+        return sampled_text
     
     def pool_setup(self):
         assert 'cn' in self.lang_mix and 'en' in self.lang_mix and 'num' in self.lang_mix and 'sym' in self.lang_mix
@@ -265,9 +273,10 @@ class ControlledRandomStringsGenerator:
         for _ in range(0, self.count):
             pool = self.pool_setup()
             if self.allow_variable:
-                current_string = self._sample_from_dict(pool, rnd.randint(1, self.length), self.next_lang_stickness)
+                current_string = self._sample_from_dict(pool, rnd.randint(1, self.length),
+                                                        self.next_lang_stickness, self.space_probability)
             else:
-                current_string = self._sample_from_dict(pool, self.length, self.next_lang_stickness)
+                current_string = self._sample_from_dict(pool, self.length, self.next_lang_stickness, self.space_probability)
             strings.append(current_string)
         return strings
 
