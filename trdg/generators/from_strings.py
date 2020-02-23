@@ -9,8 +9,8 @@ class GeneratorFromStrings:
         self,
         strings,
         count=-1,
-        fonts=[],
-        language="en",
+        fonts_en=[],
+        fonts_ch=[],
         size=32,
         skewing_angle=0,
         random_skew=False,
@@ -33,10 +33,8 @@ class GeneratorFromStrings:
     ):
         self.count = count
         self.strings = strings
-        self.fonts = fonts
-        if len(fonts) == 0:
-            self.fonts = load_fonts(language)
-        self.language = language
+        self.fonts_en = fonts_en
+        self.fonts_ch = fonts_ch
         self.size = size
         self.skewing_angle = skewing_angle
         self.random_skew = random_skew
@@ -72,7 +70,8 @@ class GeneratorFromStrings:
             FakeTextDataGenerator.generate(
                 self.generated_count,
                 self.strings[(self.generated_count - 1) % len(self.strings)],
-                self.fonts[(self.generated_count - 1) % len(self.fonts)],
+                self.fonts_en[(self.generated_count - 1) % len(self.fonts_en)],
+                self.fonts_ch[(self.generated_count - 1) % len(self.fonts_ch)],
                 None,
                 self.size,
                 None,

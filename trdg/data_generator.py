@@ -25,7 +25,8 @@ class FakeTextDataGenerator(object):
         cls,
         index,
         text,
-        font,
+        font_en,
+        font_ch,
         out_dir,
         size,
         extension,
@@ -70,7 +71,8 @@ class FakeTextDataGenerator(object):
         else:
             image, mask = computer_text_generator.generate(
                 text,
-                font,
+                font_en,
+                font_ch,
                 text_color,
                 size,
                 orientation,
