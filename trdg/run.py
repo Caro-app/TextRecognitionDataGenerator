@@ -274,6 +274,62 @@ def parse_arguments():
         default=False,
     )
     parser.add_argument(
+        "-ek",
+        "--erosion_kernel_size",
+        type=int,
+        nargs="?",
+        help="Erosion kernel size",
+        default=0        
+    )
+    parser.add_argument(
+        "-ei",
+        "--erosion_iteration",
+        type=int,
+        nargs="?",
+        help="Erosion iteration",
+        default=0        
+    )
+    parser.add_argument(
+        "-ec",
+        "--erosion_cap",
+        type=int,
+        nargs="?",
+        help="Max proportion of erosion",
+        default=0        
+    )
+    parser.add_argument(
+        "-nh",
+        "--n_holes_pct",
+        type=int,
+        nargs="?",
+        help="Parameter controlling no of whole. If it is 1, it would cut out the longest dimension of the whole picture if the holes align on the same axis without overlap.",
+        default=0        
+    )
+    parser.add_argument(
+        "-hs",
+        "--hole_size_pct",
+        type=int,
+        nargs="?",
+        help="Ratio of hole size to the minimum of height and width of picture",
+        default=0        
+    )
+    parser.add_argument(
+        "-bp",
+        "--border_prob",
+        type=float,
+        nargs="?",
+        help="Ratio of hole size to the minimum of height and width of picture",
+        default=0        
+    )
+    parser.add_argument(
+        "-bs",
+        "--border",
+        type=margins,
+        nargs="?",
+        help="Ratio of hole size to the minimum of height and width of picture",
+        default=(5, 5, 5, 5)        
+    )
+    parser.add_argument(
         "-fi",
         "--fit",
         action="store_true",
@@ -393,6 +449,13 @@ def main():
                 [args.character_spacing] * string_count,
                 [args.margins] * string_count,
                 [args.random_margins] * string_count,
+                [args.erosion_kernel_size] * string_count,
+                [args.erosion_iteration] * string_count,
+                [args.erosion_cap] * string_count,
+                [args.n_holes_pct] * string_count,
+                [args.hole_size_pct] * string_count,
+                [args.border_prob] * string_count,
+                [args.border] * string_count,
                 [args.fit] * string_count,
                 [args.output_mask] * string_count,
             ),

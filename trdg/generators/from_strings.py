@@ -28,6 +28,13 @@ class GeneratorFromStrings:
         character_spacing=0,
         margins=(5, 5, 5, 5),
         random_margins=False,
+        erosion_kernel_size=0,
+        erosion_iteration=0,
+        erosion_cap=0,
+        n_holes_pct=0,
+        hole_size_pct=0,
+        border_prob=0,
+        border=(5, 5, 5, 5),
         fit=False,
         output_mask=False,
     ):
@@ -52,6 +59,13 @@ class GeneratorFromStrings:
         self.character_spacing = character_spacing
         self.margins = margins
         self.random_margins = random_margins
+        self.erosion_kernel_size = erosion_kernel_size
+        self.erosion_iteration = erosion_iteration
+        self.erosion_cap = erosion_cap 
+        self.n_holes_pct = n_holes_pct
+        self.hole_size_pct = hole_size_pct
+        self.border_prob = border_prob
+        self.border = border
         self.fit = fit
         self.output_mask = output_mask
         self.generated_count = 0
@@ -92,6 +106,13 @@ class GeneratorFromStrings:
                 self.character_spacing,
                 self.margins,
                 self.random_margins,
+                self.erosion_kernel_size,
+                self.erosion_iteration,
+                self.erosion_cap,
+                self.n_holes_pct,
+                self.hole_size_pct,
+                self.border_prob,
+                self.border,
                 self.fit,
                 self.output_mask,
             ),

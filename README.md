@@ -6,6 +6,9 @@
 - Option to sample line from from CN and EN txt file  
 - Random Margin Option  
 - Chinese font and english font at the same line size
+- Morphological erosion
+- Cutout
+- Random black border 
 
 Example  
 ```
@@ -16,12 +19,15 @@ lang_mix = {'cn': 0.5,
             'num': 0.2,
             'sym': 0.2}
 
-font_ch = [ttf, ttc files]
-font_en = [ttf, ttc files]
+fonts_ch = [ttf, ttc files]
+fonts_en = [ttf, ttc files]
 
 generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness=0.7,
-                                          font_ch=font_ch, font_en=font_en,
-                                          space_probability=0.3, ch_file=None, en_file=None, random_margins=True)
+                                          fonts_ch=font_ch, fonts_en=font_en,
+                                          space_probability=0.3, ch_file=None, en_file=None, random_margins=True,
+                                          erosion_kernel_size=3, erosion_iteration=1, erosion_cap=0.4,
+                                          n_holes_pct=0.5, hole_size_pct=0.3,
+                                          border_prob=0.3, border=(5, 5, 5, 5))
 
 for i, (img, lbl) in enumerate(generator):
     if i < 100:

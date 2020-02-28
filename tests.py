@@ -130,6 +130,7 @@ class DataGenerator(unittest.TestCase):
             0,
             "TEST TEST TEST",
             "tests/font.ttf",
+            "tests/font.ttf",
             "tests/out/",
             64,
             "jpg",
@@ -152,6 +153,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -165,6 +173,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             1,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             32,
@@ -188,6 +197,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -201,6 +217,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             2,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -224,6 +241,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -237,6 +261,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             3,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -258,6 +283,13 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             False,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
             0,
             0,
         )
@@ -274,6 +306,7 @@ class DataGenerator(unittest.TestCase):
             4,
             "TEST TEST TEST",
             "tests/font.ttf",
+            "tests/font.ttf",
             "tests/out/",
             64,
             "jpg",
@@ -296,6 +329,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -309,6 +349,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             5,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -332,6 +373,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -345,6 +393,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             6,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -368,6 +417,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -381,6 +437,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             7,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -404,6 +461,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -417,6 +481,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             8,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -440,6 +505,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -454,6 +526,7 @@ class DataGenerator(unittest.TestCase):
             FakeTextDataGenerator.generate(
                 9,
                 "TEST TEST TEST",
+                "tests/font.ttf",
                 "tests/font.ttf",
                 "tests/out/",
                 64,
@@ -477,6 +550,13 @@ class DataGenerator(unittest.TestCase):
                 False,
                 0,
                 0,
+                0,
+                0,
+                0,
+                0,
+                (5, 5, 5, 5),
+                0,
+                0,
             )
             raise Exception("Vertical handwritten did not throw")
         except ValueError:
@@ -486,6 +566,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             10,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             32,
@@ -509,6 +590,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -522,6 +610,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             11,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             32,
@@ -545,6 +634,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -558,6 +654,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             12,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             32,
@@ -581,6 +678,13 @@ class DataGenerator(unittest.TestCase):
             False,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
         )
 
         self.assertTrue(
@@ -595,6 +699,7 @@ class DataGenerator(unittest.TestCase):
             FakeTextDataGenerator.generate(
                 12,
                 "TEST TEST TEST",
+                "tests/font.ttf",
                 "tests/font.ttf",
                 "tests/out/",
                 32,
@@ -618,6 +723,13 @@ class DataGenerator(unittest.TestCase):
                 False,
                 0,
                 0,
+                0,
+                0,
+                0,
+                0,
+                (5, 5, 5, 5),
+                1,
+                0,
             )
             raise Exception("Unknown orientation did not throw")
         except ValueError:
@@ -627,6 +739,7 @@ class DataGenerator(unittest.TestCase):
         FakeTextDataGenerator.generate(
             13,
             "TEST TEST TEST",
+            "tests/font.ttf",
             "tests/font.ttf",
             "tests/out/",
             64,
@@ -647,7 +760,15 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (0, 0, 0, 0),
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            (5, 5, 5, 5),
+            0,
             0,
         )
 

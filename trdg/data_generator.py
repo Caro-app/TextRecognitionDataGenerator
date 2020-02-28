@@ -1,9 +1,10 @@
 import os
 import random as rnd
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageOps
 
-from trdg import computer_text_generator, background_generator, distorsion_generator
+from trdg import computer_text_generator, background_generator, distorsion_generator, erosion_cutout
+import numpy as np
 
 try:
     from trdg import handwritten_text_generator
@@ -47,6 +48,13 @@ class FakeTextDataGenerator(object):
         character_spacing,
         margins,
         random_margins,
+        erosion_kernel_size,
+        erosion_iteration,
+        erosion_cap,
+        n_holes_pct,
+        hole_size_pct,
+        border_prob,
+        border,
         fit,
         output_mask,
     ):
@@ -212,6 +220,42 @@ class FakeTextDataGenerator(object):
         final_image = background_img.filter(gaussian_filter)
         final_mask = background_mask.filter(gaussian_filter)
 
+        ##################################
+        # Apply random_erosion #
+        ##################################
+        final_image = np.array(final_image)
+        final_mask = np.array(final_mask)
+
+        ##################################
+        # Apply random_erosion #
+        ##################################
+        final_image = erosion_cutout.random_erosion(final_image, erosion_kernel_size, erosion_iteration, erosion_cap)
+        final_mask = erosion_cutout.random_erosion(final_mask, erosion_kernel_size, erosion_iteration, erosion_cap)
+
+        ##################################
+        # Apply Cutout #
+        ##################################
+        final_image = erosion_cutout.cutout(final_image, n_holes_pct, hole_size_pct)
+        final_mask = erosion_cutout.cutout(final_mask, n_holes_pct, hole_size_pct)
+        
+        ##################################
+        # Turning into PIL Image#
+        ##################################
+        final_image = Image.fromarray(np.uint8(final_image))
+        final_mask = Image.fromarray(np.uint8(final_mask))
+
+        ##################################
+        # Add Border#
+        ##################################
+        if np.random.random() <= border_prob:
+            border_size = (np.random.randint(1, border[0]) if border[0] > 0 else 0, 
+                           np.random.randint(1, border[1]) if border[1] > 0 else 0, 
+                           np.random.randint(1, border[2]) if border[2] > 0 else 0, 
+                           np.random.randint(1, border[3]) if border[3] > 0 else 0)
+
+            final_image = ImageOps.expand(final_image, border=border_size)
+            final_mask = ImageOps.expand(final_mask, border=border_size)
+        
         #####################################
         # Generate name for resulting image #
         #####################################
