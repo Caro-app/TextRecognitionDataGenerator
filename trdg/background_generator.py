@@ -59,8 +59,9 @@ def picture(height, width):
     """
         Create a background with a picture
     """
-    script_path = os.path.split(os.path.realpath(__file__))[0]
+    script_path = os.path.realpath(os.getcwd())
     pictures = os.listdir(os.path.join(script_path, "pictures"))
+    pictures = [i for i in pictures if not i.startswith(".")]
 
     if len(pictures) > 0:
         pic = Image.open(os.path.join(script_path, "pictures", pictures[rnd.randint(0, len(pictures) - 1)]))
