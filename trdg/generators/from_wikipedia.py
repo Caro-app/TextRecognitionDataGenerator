@@ -1,5 +1,4 @@
 from .from_strings import GeneratorFromStrings
-from ..data_generator import FakeTextDataGenerator
 from ..string_generator import create_strings_from_wikipedia
 from ..utils import load_dict, load_fonts
 
@@ -36,6 +35,8 @@ class GeneratorFromWikipedia:
         erosion_cap=0,
         n_holes_pct=0,
         hole_size_pct=0,
+        alpha_low=255,
+        invert=False,
         border_prob=0,
         border=(5, 5, 5, 5),
         fit=False,
@@ -71,6 +72,8 @@ class GeneratorFromWikipedia:
             erosion_cap,
             n_holes_pct,
             hole_size_pct,
+            alpha_low,
+            invert,
             border_prob,
             border,
             fit,

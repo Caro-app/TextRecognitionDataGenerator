@@ -9,6 +9,8 @@
 - Morphological erosion
 - Cutout
 - Random black border 
+- Transparency
+- Inverted image
 
 Example  
 ```
@@ -27,6 +29,7 @@ generator = GeneratorFromControlledRandom(lang_mix=lang_mix, next_lang_stickness
                                           space_probability=0.3, ch_file=None, en_file=None, random_margins=True,
                                           erosion_kernel_size=3, erosion_iteration=1, erosion_cap=0.4,
                                           n_holes_pct=0.5, hole_size_pct=0.3,
+                                          alpha_low=100, invert=False,
                                           border_prob=0.3, border=(5, 5, 5, 5))
 
 for i, (img, lbl) in enumerate(generator):

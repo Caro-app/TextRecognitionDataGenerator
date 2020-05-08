@@ -33,6 +33,8 @@ class GeneratorFromStrings:
         erosion_cap=0,
         n_holes_pct=0,
         hole_size_pct=0,
+        alpha_low=255,
+        invert=False,
         border_prob=0,
         border=(5, 5, 5, 5),
         fit=False,
@@ -64,6 +66,8 @@ class GeneratorFromStrings:
         self.erosion_cap = erosion_cap 
         self.n_holes_pct = n_holes_pct
         self.hole_size_pct = hole_size_pct
+        self.alpha_low = alpha_low
+        self.invert = invert
         self.border_prob = border_prob
         self.border = border
         self.fit = fit
@@ -111,6 +115,8 @@ class GeneratorFromStrings:
                 self.erosion_cap,
                 self.n_holes_pct,
                 self.hole_size_pct,
+                self.alpha_low,
+                self.invert,
                 self.border_prob,
                 self.border,
                 self.fit,

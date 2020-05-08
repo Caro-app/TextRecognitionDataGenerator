@@ -268,8 +268,7 @@ def parse_arguments():
     parser.add_argument(
         "-rm",
         "--random_margins",
-        type=bool,
-        nargs="?",
+        action="store_true",
         help="Random margins or not",
         default=False,
     )
@@ -312,6 +311,18 @@ def parse_arguments():
         nargs="?",
         help="Ratio of hole size to the minimum of height and width of picture",
         default=0        
+    )
+    parser.add_argument(
+        "-al",
+        "--alpha_low",
+        type=int,
+        nargs="?",
+        help="lower bound of alpha channel",
+        default=255        
+    )
+    parser.add_argument(
+        "--invert",
+        action="store_true"
     )
     parser.add_argument(
         "-bp",
@@ -454,6 +465,8 @@ def main():
                 [args.erosion_cap] * string_count,
                 [args.n_holes_pct] * string_count,
                 [args.hole_size_pct] * string_count,
+                [args.alpha_low] * string_count,
+                [args.invert] * string_count,
                 [args.border_prob] * string_count,
                 [args.border] * string_count,
                 [args.fit] * string_count,

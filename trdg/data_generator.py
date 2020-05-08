@@ -3,7 +3,8 @@ import random as rnd
 
 from PIL import Image, ImageFilter, ImageOps
 
-from trdg import computer_text_generator, background_generator, distorsion_generator, erosion_cutout
+from trdg import computer_text_generator, background_generator, distorsion_generator
+from trdg.downstream_augment import DownstreamAugment
 import numpy as np
 
 try:
@@ -53,6 +54,8 @@ class FakeTextDataGenerator(object):
         erosion_cap,
         n_holes_pct,
         hole_size_pct,
+        alpha_low,
+        invert,
         border_prob,
         border,
         fit,
@@ -223,26 +226,49 @@ class FakeTextDataGenerator(object):
         ##################################
         # Apply random_erosion #
         ##################################
+        colormode_image = final_image.mode
+        colormode_mask = final_mask.mode
         final_image = np.array(final_image)
         final_mask = np.array(final_mask)
+
+        im = DownstreamAugment(final_image, colormode_image)
+        mask = DownstreamAugment(final_mask, colormode_mask)
 
         ##################################
         # Apply random_erosion #
         ##################################
-        final_image = erosion_cutout.random_erosion(final_image, erosion_kernel_size, erosion_iteration, erosion_cap)
-        final_mask = erosion_cutout.random_erosion(final_mask, erosion_kernel_size, erosion_iteration, erosion_cap)
+        im.random_erosion(erosion_kernel_size, 
+                          erosion_iteration, 
+                          erosion_cap)
+        mask.random_erosion(erosion_kernel_size, 
+                            erosion_iteration, 
+                            erosion_cap)
 
         ##################################
         # Apply Cutout #
         ##################################
-        final_image = erosion_cutout.cutout(final_image, n_holes_pct, hole_size_pct)
-        final_mask = erosion_cutout.cutout(final_mask, n_holes_pct, hole_size_pct)
-        
+        im.cutout(n_holes_pct, hole_size_pct)
+        mask.cutout(n_holes_pct, hole_size_pct)
+                
+        ##################################
+        # Apply Inverted#
+        ##################################
+        if invert:
+            im.invert()
+            mask.invert()
+
+        ##################################
+        # Apply transparentify#
+        ##################################
+        if alpha_low != 255:
+            im.transparentify(alpha_low)
+            mask.transparentify(alpha_low)
+
         ##################################
         # Turning into PIL Image#
         ##################################
-        final_image = Image.fromarray(np.uint8(final_image))
-        final_mask = Image.fromarray(np.uint8(final_mask))
+        final_image = Image.fromarray(im.get_img(), mode=im.get_colormode())
+        final_mask = Image.fromarray(mask.get_img(), mode=mask.get_colormode())
 
         ##################################
         # Add Border#
@@ -275,10 +301,10 @@ class FakeTextDataGenerator(object):
 
         # Save the image
         if out_dir is not None:
-            final_image.convert("RGB").save(os.path.join(out_dir, image_name))
+            final_image.convert("RGBA").save(os.path.join(out_dir, image_name))
             if output_mask == 1:
-                final_mask.convert("RGB").save(os.path.join(out_dir, mask_name))
+                final_mask.convert("RGBA").save(os.path.join(out_dir, mask_name))
         else:
             if output_mask == 1:
-                return final_image.convert("RGB"), final_mask.convert("RGB")
-            return final_image.convert("RGB")
+                return final_image.convert("RGBA"), final_mask.convert("RGBA")
+            return final_image.convert("RGBA")
