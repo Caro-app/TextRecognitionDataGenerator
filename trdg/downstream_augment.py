@@ -88,6 +88,11 @@ class DownstreamAugment:
         if n_holes_pct == 0 or hole_size_pct == 0:
             return
 
+        if self.colormode == 'RGB':
+            self.img = 255 - self.img
+        elif self.colormode == 'RGBA':
+            self.img[:, :, :3] = 255 - self.img[:, :, :3]
+
         h, w = self.img.shape[0:2]
         hole_size = int(min(h, w) * hole_size_pct)
                 
@@ -102,14 +107,16 @@ class DownstreamAugment:
             y2 = np.clip(y + hole_size // 2, 0, h)
             x1 = np.clip(x - hole_size // 2, 0, w)
             x2 = np.clip(x + hole_size // 2, 0, w)
-            mask[y1: y2, x1: x2] = 255
+            mask[y1: y2, x1: x2] = 0
 
         mask = np.expand_dims(mask, axis=2)
 
         if self.colormode == 'RGB':
             self.img = self.img * mask
+            self.img = 255 - self.img
         elif self.colormode == 'RGBA':
             self.img[:, :, :3] = self.img[:, :, :3] * mask
+            self.img[:, :, :3] = 255 - self.img[:, :, :3]
 
     def invert(self):
         if self.colormode == 'RGB':

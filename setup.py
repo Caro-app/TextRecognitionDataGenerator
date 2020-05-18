@@ -12,7 +12,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="trdg",
-    version="1.3.2",
+    version="1.3.2-apoideainternal",
     description="TextRecognitionDataGenerator: A synthetic data generator for text recognition",
     long_description=long_description,
     long_description_content_type="text/markdown",
